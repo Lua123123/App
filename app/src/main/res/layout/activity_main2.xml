@@ -21,19 +21,19 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@drawable/bg_2_top"
                 app:titleTextColor="@color/white"
-                app:title="                                             Home">
+                app:title="Home">
 
             </androidx.appcompat.widget.Toolbar>
 
             <ViewFlipper
                 android:id="@+id/viewFlipper"
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/bg_2_top"
                 android:layout_width="match_parent"
                 android:layout_height="200dp">
 
             </ViewFlipper>
             <LinearLayout
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/bg_2_top"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -41,7 +41,8 @@
                     android:textSize="20sp"
                     android:layout_marginLeft="10dp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="15dp"
                     android:text="Sản phẩm mới nhất"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -61,6 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ListView
+                android:layout_marginTop="10dp"
                 android:id="@+id/listViewmanhinhchinh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

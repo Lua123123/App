@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
@@ -15,6 +17,8 @@ import android.util.AndroidException;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,7 +26,10 @@ import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
 import com.example.app.Adapter.LoaiSpAdapter;
+import com.example.app.Adapter.SanPhamMoiAdapter;
 import com.example.app.Model.LoaiSp;
+import com.example.app.Model.SanPhamMoi;
+import com.example.app.Model.SanPhamMoiModel;
 import com.example.app.R;
 import com.example.app.Retrofit.ApiBanHang;
 import com.example.app.Retrofit.RetrofitClient;
@@ -54,40 +61,92 @@ public class MainActivity2 extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     ApiBanHang apiBanHang;
 
+    //Hiển thị dữ liệu lên Recycleview màn hình chính
+    List<SanPhamMoi> mangSpMoi;
+    SanPhamMoiAdapter spAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         apiBanHang = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanHang.class);
+
         Anhxa();
         ActionBar();
-        ActionViewFlipper();
 
         //Hàm kiểm tra kết nối Internet
         if (isConnected(this)){
-            Toast.makeText(getApplicationContext(), "Internet Connected", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getApplicationContext(), "Internet Connected", Toast.LENGTH_LONG).show();
             ActionViewFlipper();
             //Hàm kết nối với PHP
             getLoaiSanpham();
+            //Hiển thị dữ liệu lên Recycleview màn hình chính
+            getSpMoi();
+            //Bắt sự kiện chuyển
+            getEventClick();
         } else {
             Toast.makeText(getApplicationContext(), "Failed: Internet Unconnected", Toast.LENGTH_LONG).show();
         }
     }
 
+    private void getEventClick() {
+        listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i) {
+                    case 0:
+                        Intent trangchu = new Intent(getApplicationContext(), MainActivity2.class);
+                        startActivity(trangchu);
+                        break;
+                    case 1:
+                        Intent phone = new Intent(getApplicationContext(), PhoneActivity.class);
+                        startActivity(phone);
+                        break;
+                    case 2:
+                        Intent laptop = new Intent(getApplicationContext(), LaptopActivity.class);
+                        startActivity(laptop);
+                        break;
+                }
+            }
+        });
+    }
+
+
+    private void getSpMoi() {
+        compositeDisposable.add(apiBanHang.getSpMoi()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        sanPhamMoiModel -> {
+                            if (sanPhamMoiModel.isSuccess()){
+                                mangSpMoi = sanPhamMoiModel.getResult();
+                                //Adapter : Khởi tạo Adapter
+                                spAdapter = new SanPhamMoiAdapter(getApplicationContext(), mangSpMoi);
+                                recyclerViewManHinhChinh.setAdapter(spAdapter);
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(), "Server unconnected, Please connect" + throwable.getMessage(),Toast.LENGTH_LONG).show();
+                        }
+                ));
+    }
+
     //Hàm kết nối với PHP
     private void getLoaiSanpham() {
         compositeDisposable.add(apiBanHang.getLoaiSp()
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe(
-                loaiSpModel -> {
-                    if (loaiSpModel.isSuccess()){
-                        //Lấy tên của loại sản phẩm
-                        Toast.makeText(getApplicationContext(), loaiSpModel.getResult().get(0).getTensanpham(), Toast.LENGTH_LONG).show();
-                    }
-                }
-        ));
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        loaiSpModel -> {
+                            if (loaiSpModel.isSuccess()){
+                                mangloaisp = loaiSpModel.getResult();
+                                //Adapter : Khởi tạo Adapter
+                                loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(), mangloaisp);
+                                listViewManHinhChinh.setAdapter(loaiSpAdapter);
+                            }
+                        }
+                ));
     }
 
     private void ActionViewFlipper() {
@@ -96,6 +155,8 @@ public class MainActivity2 extends AppCompatActivity {
         mangquangcao.add("https://sonypro.vn/wp-content/uploads/2021/04/Dien-thoai-gia-re-1.jpg");
         mangquangcao.add("https://media.vov.vn/sites/default/files/styles/front_large/public/2020-11/2_183.jpg");
         mangquangcao.add("https://cdn.tgdd.vn/Files/2013/11/29/523609/thu-thuat-chup-anh-dep-bang-dien-thoai_800x450.jpg");
+        mangquangcao.add("https://vtv1.mediacdn.vn/thumb_w/650/2019/5/4/iphone-xi-concept-images-15569264542701469883220.jpg");
+
         for(int i = 0; i < mangquangcao.size(); i++){
             ImageView imageView = new ImageView(getApplicationContext());
             Glide.with(getApplicationContext()).load(mangquangcao.get(i)).into(imageView);
@@ -135,9 +196,12 @@ public class MainActivity2 extends AppCompatActivity {
         //Adapter : Khỏi tạo List
         mangloaisp = new ArrayList<>();
 
-        //Adapter : Khởi tạo Adapter
-        loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(), mangloaisp);
-        listViewManHinhChinh.setAdapter(loaiSpAdapter);
+        //Hiển thị dữ liệu lên Recycleview màn hình chính
+        mangSpMoi = new ArrayList<>();
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+        recyclerViewManHinhChinh.setLayoutManager(layoutManager);
+        recyclerViewManHinhChinh.setHasFixedSize(true);
+
     }
 
     //Hàm kiểm tra kết nối Internet : Bài 5: Kết nối Server để lấy dữ liệu
@@ -154,6 +218,11 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onDestroy(){
+        compositeDisposable.clear();
+        super.onDestroy();
+    }
 }
 
 
