@@ -36,13 +36,13 @@ public class DienThoaiAdapter extends RecyclerView.Adapter<DienThoaiAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         SanPhamMoi sanPham = array.get(position);
-        holder.tensp.getText(sanPham.getTensp()); //(sanPham.getTensp());
+        holder.tensp.setText(sanPham.getTensp()); //(sanPham.getTensp());
 
         //Tinh chỉnh lại phông giá sản phẩm ở màn hình chính
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         holder.giasp.setText("Giá: " + decimalFormat.format(Double.parseDouble(sanPham.getGia())) + "Đ");
 
-        holder.mota.getText(sanPham.getMota());
+        holder.mota.setText(sanPham.getMota());
         Glide.with(context).load(sanPham.getHinhanh()).into(holder.hinhanh);
     }
 

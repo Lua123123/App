@@ -1,5 +1,6 @@
 package com.example.app.Utils;
 
 public class Utils {
-    public static final String BASE_URL="http://192.168.1.19/banhang/";
+    public static final String BASE_URL="http://10.0.0.45/banhang/";
+
 }

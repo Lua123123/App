@@ -14,6 +14,7 @@ import android.net.Network;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.AndroidException;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -145,7 +146,12 @@ public class MainActivity2 extends AppCompatActivity {
                                 loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(), mangloaisp);
                                 listViewManHinhChinh.setAdapter(loaiSpAdapter);
                             }
+                        }, throwable -> {
+                            Log.d("test", throwable.getMessage());
+
+
                         }
+
                 ));
     }
 
