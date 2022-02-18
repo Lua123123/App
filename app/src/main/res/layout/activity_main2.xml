@@ -19,21 +19,38 @@
                 android:layout_width="match_parent"
                 android:textAlignment="textEnd"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@drawable/bg_2_top"
+                android:background="@drawable/img_top"
                 app:titleTextColor="@color/white"
                 app:title="Home">
 
             </androidx.appcompat.widget.Toolbar>
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/toolBarmanhinhchinh"
+                app:layout_constraintBottom_toTopOf="@+id/viewFlipper">
+            </androidx.appcompat.widget.Toolbar>
 
             <ViewFlipper
                 android:id="@+id/viewFlipper"
-                android:background="@drawable/bg_2_top"
+                android:background="@drawable/img_center"
                 android:layout_width="match_parent"
                 android:layout_height="200dp">
 
             </ViewFlipper>
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@color/white"
+                app:layout_constraintTop_toBottomOf="@+id/viewFlipper"
+                app:layout_constraintBottom_toTopOf="@+id/recycleviewww">
+            </androidx.appcompat.widget.Toolbar>
+
             <LinearLayout
-                android:background="@drawable/bg_2_top"
+                android:id="@+id/recycleviewww"
+                android:background="@drawable/img_bot"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

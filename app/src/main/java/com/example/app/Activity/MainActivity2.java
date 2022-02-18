@@ -102,10 +102,12 @@ public class MainActivity2 extends AppCompatActivity {
                         break;
                     case 1:
                         Intent phone = new Intent(getApplicationContext(), PhoneActivity.class);
+                        phone.putExtra("loai", 1);
                         startActivity(phone);
                         break;
                     case 2:
                         Intent laptop = new Intent(getApplicationContext(), LaptopActivity.class);
+                        laptop.putExtra("loai", 2);
                         startActivity(laptop);
                         break;
                 }
@@ -159,9 +161,12 @@ public class MainActivity2 extends AppCompatActivity {
         List<String> mangquangcao = new ArrayList<>();
         mangquangcao.add("https://image.thanhnien.vn/w660/Uploaded/2022/xdrkxrvekx/2021_03_30/830_cgoz.jpg");
         mangquangcao.add("https://sonypro.vn/wp-content/uploads/2021/04/Dien-thoai-gia-re-1.jpg");
-        mangquangcao.add("https://media.vov.vn/sites/default/files/styles/front_large/public/2020-11/2_183.jpg");
+        mangquangcao.add("https://tapchicongnghemaytinh.com/wp-content/uploads/2021/07/macbookair2019vsmacbookpro2019_800x534.jpg");
         mangquangcao.add("https://cdn.tgdd.vn/Files/2013/11/29/523609/thu-thuat-chup-anh-dep-bang-dien-thoai_800x450.jpg");
         mangquangcao.add("https://vtv1.mediacdn.vn/thumb_w/650/2019/5/4/iphone-xi-concept-images-15569264542701469883220.jpg");
+        mangquangcao.add("https://cellphones.com.vn/sforum/wp-content/uploads/2021/02/DSC03716.jpg");
+        mangquangcao.add("https://media.vov.vn/sites/default/files/styles/front_large/public/2020-11/2_183.jpg");
+
 
         for(int i = 0; i < mangquangcao.size(); i++){
             ImageView imageView = new ImageView(getApplicationContext());

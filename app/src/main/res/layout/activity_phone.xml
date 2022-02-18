@@ -4,15 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.PhoneActivity">
+    tools:context=".Activity.PhoneActivity"
+    android:background="@drawable/img_activiti_phone_laptop">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/recycleview_dt"
+        android:layout_marginBottom="2dp">
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        app:title="Phone"
-        android:background="#B2B4C1"
+        app:title="        Phone"
+        android:background="@drawable/img_top"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
     </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/reg_back"
+        android:background="@drawable/ic_back"
+        android:backgroundTint="@color/teal_700"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="14dp"
+        tools:ignore="MissingConstraints" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleview_dt"
         android:layout_marginTop="5dp"

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.app.Activity.DienThoaiChiTietAcivity;
+import com.example.app.Activity.LapTopChiTietActivity;
 import com.example.app.Interface.ItemClickListener;
 import com.example.app.Model.SanPhamMoi;
 import com.example.app.R;
@@ -21,14 +22,14 @@ import com.example.app.R;
 import java.text.DecimalFormat;
 import java.util.List;
 
-public class DienThoaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class LapTopAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     List<SanPhamMoi> array;
     //nút progressBar xoay vòng
     private static final int VIEW_TYPE_DATA = 0;
     private static final int VIEW_TYPE_LOADING = 1;
 
-    public DienThoaiAdapter(Context context, List<SanPhamMoi> array) {
+    public LapTopAdapter(Context context, List<SanPhamMoi> array) {
         this.context = context;
         this.array = array;
     }
@@ -37,7 +38,7 @@ public class DienThoaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_DATA) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_phone, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_laptop, parent, false);
             return new MyViewHolder(view);
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_loading, parent, false);
@@ -49,25 +50,25 @@ public class DienThoaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof MyViewHolder) {
             MyViewHolder myViewHolder = (MyViewHolder) holder;
-            SanPhamMoi sanPhamDienthoai = array.get(position);
-            myViewHolder.tensp.setText(sanPhamDienthoai.getTensp().trim()); //(sanPham.getTensp());
+            SanPhamMoi sanPhamLaptop = array.get(position);
+            myViewHolder.tensplaptop.setText(sanPhamLaptop.getTensp().trim()); //(sanPham.getTensp());
 
             //Tinh chỉnh lại phông giá sản phẩm ở màn hình chính
             DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-            myViewHolder.giasp.setText("Giá: " + decimalFormat.format(Double.parseDouble(sanPhamDienthoai.getGia())) + "Đ");
+            myViewHolder.giasplaptop.setText("Giá: " + decimalFormat.format(Double.parseDouble(sanPhamLaptop.getGia())) + "Đ");
 
-            myViewHolder.mota.setText(sanPhamDienthoai.getMota());
-            Glide.with(context).load(sanPhamDienthoai.getHinhanh()).into(myViewHolder.hinhanh);
+            myViewHolder.motalaptop.setText(sanPhamLaptop.getMota());
+            Glide.with(context).load(sanPhamLaptop.getHinhanh()).into(myViewHolder.hinhanhlaptop);
 
             myViewHolder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onClick(View view, int pos, boolean isLongClick) {
                     if (!isLongClick) {
                         //click
-                        Intent intent = new Intent(context, DienThoaiChiTietAcivity.class);
-                        intent.putExtra("chitiet", sanPhamDienthoai);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        context.startActivity(intent);
+                        Intent intent2 = new Intent(context, LapTopChiTietActivity.class);
+                        intent2.putExtra("chitiet", sanPhamLaptop);
+                        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        context.startActivity(intent2);
                     }
                 }
 
@@ -97,15 +98,15 @@ public class DienThoaiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tensp, giasp, mota;
-        ImageView hinhanh;
+        TextView tensplaptop, giasplaptop, motalaptop;
+        ImageView hinhanhlaptop;
         private ItemClickListener itemClickListener;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            tensp = itemView.findViewById(R.id.itemdt_ten);
-            giasp = itemView.findViewById(R.id.itemdt_gia);
-            mota = itemView.findViewById(R.id.itemdt_mota);
-            hinhanh = itemView.findViewById(R.id.itemdt_image);
+            tensplaptop = itemView.findViewById(R.id.itemdt_ten_laptop);
+            giasplaptop = itemView.findViewById(R.id.itemdt_gia_laptop);
+            motalaptop = itemView.findViewById(R.id.itemdt_mota_laptop);
+            hinhanhlaptop = itemView.findViewById(R.id.itemdt_image_laptop);
             itemView.setOnClickListener(this);
         }
 
