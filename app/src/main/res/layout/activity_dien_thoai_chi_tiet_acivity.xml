@@ -7,12 +7,30 @@
     tools:context=".Activity.DienThoaiChiTietAcivity">
 
     <Toolbar
-        android:id="@+id/toolbarchitiet"
+        android:id="@+id/toolbarchitietdienthoai"
         android:background="@drawable/img_top"
         android:title="        Product Detail"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize" />
+        android:layout_height="?actionBarSize" >
+        <FrameLayout
+            android:id="@+id/framegiohang"
+            android:layout_gravity="right"
+            android:layout_width="55dp"
+            android:layout_height="?actionBarSize">
+            <com.nex3z.notificationbadge.NotificationBadge
+                android:id="@+id/menu_sl_dienthoai"
+                android:layout_gravity="top|right"
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+            <ImageView
+                android:src="@drawable/ic_cart"
+                android:layout_marginTop="10dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"/>
+        </FrameLayout>
+    </Toolbar>
     <ImageView
         android:id="@+id/reg_back"
         android:background="@drawable/ic_back"
@@ -28,7 +46,7 @@
         android:id="@+id/layout1"
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarchitiet"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarchitietdienthoai"
         app:layout_constraintBottom_toTopOf="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

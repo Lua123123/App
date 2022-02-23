@@ -61,6 +61,7 @@ public class PhoneActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent_reg_back = new Intent(getApplicationContext(), MainActivity2.class);
+                //intent_reg_back.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent_reg_back);
             }
         });

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app.R;
+import com.example.app.Utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -131,8 +132,14 @@ public class RegisterApp extends AppCompatActivity implements View.OnClickListen
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
+
+                                        //Hàm khi đăng ký xong đỡ nhập lại tên Tài khoản, nó sẽ hiện luôn ở ô gmail(đăng nhập), mình chỉ cần nhập pass thôi
+                                        Utils.user_current.setEmail(email);
+
                                         Toast.makeText(RegisterApp.this, "User has been registered successfully, please verify your email!", Toast.LENGTH_LONG).show();
-                                        progressBar.setVisibility(View.VISIBLE);
+                                        progressBar.setVisibility(View.GONE);
+           ///////////////////////Thêm lệnh gửi verify Email ở ngay đây//////////////////////////////////////////
+
                                         Intent intent3 = new Intent(RegisterApp.this, MainActivity.class);
                                         startActivity(intent3);
                                         finish();

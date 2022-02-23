@@ -20,6 +20,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ import com.example.app.Retrofit.ApiBanHang;
 import com.example.app.Retrofit.RetrofitClient;
 import com.example.app.Utils.Utils;
 import com.google.android.material.navigation.NavigationView;
+import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +67,10 @@ public class MainActivity2 extends AppCompatActivity {
     //Hiển thị dữ liệu lên Recycleview màn hình chính
     List<SanPhamMoi> mangSpMoi;
     SanPhamMoiAdapter spAdapter;
+
+    //badge
+    NotificationBadge badge;
+    FrameLayout frameLayout;
 
 
     @Override
@@ -106,7 +112,7 @@ public class MainActivity2 extends AppCompatActivity {
                         startActivity(phone);
                         break;
                     case 2:
-                        Intent laptop = new Intent(getApplicationContext(), LaptopActivity.class);
+                        Intent laptop = new Intent(getApplicationContext(), PhoneActivity.class);
                         laptop.putExtra("loai", 2);
                         startActivity(laptop);
                         break;
@@ -213,6 +219,38 @@ public class MainActivity2 extends AppCompatActivity {
         recyclerViewManHinhChinh.setLayoutManager(layoutManager);
         recyclerViewManHinhChinh.setHasFixedSize(true);
 
+        //badge
+        badge = findViewById(R.id.menu_sl_dienthoai);
+        frameLayout = findViewById(R.id.framegiohang);
+
+        //giỏ hàng
+        if (Utils.manggiohang == null) {
+            Utils.manggiohang = new ArrayList<>();
+        } else {
+            int totalItem = 0;
+            for (int i = 0; i < Utils.manggiohang.size(); i++) {
+                totalItem = totalItem + Utils.manggiohang.get(i).getSoluong();
+            }
+            badge.setText(String.valueOf(totalItem));
+        }
+
+        frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent giohang = new Intent(getApplicationContext(), GioHangActivity.class);
+                startActivity(giohang);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int totalItem = 0;
+        for (int i = 0; i < Utils.manggiohang.size(); i++) {
+            totalItem = totalItem + Utils.manggiohang.get(i).getSoluong();
+        }
+        badge.setText(String.valueOf(totalItem));
     }
 
     //Hàm kiểm tra kết nối Internet : Bài 5: Kết nối Server để lấy dữ liệu

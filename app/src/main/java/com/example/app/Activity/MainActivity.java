@@ -13,11 +13,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.app.R;
+import com.example.app.Utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //paper : hàm chạy lại app thì ô gmail vẫn lưu giá trị mail trước đó nhập vào
+        Paper.init(this);
+
         mAuth = FirebaseAuth.getInstance();
 
         register = (TextView) this.findViewById(R.id.register);
@@ -43,6 +49,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         register.setOnClickListener(this);
         login.setOnClickListener(this);
         forgotPassword.setOnClickListener(this);
+
+        // read paper : hàm chạy lại app thì ô gmail vẫn lưu giá trị mail trước đó nhập vào
+        if (Paper.book().read("email") != null) {
+            editTextEmail.setText(Paper.book().read("email"));
+        }
     }
 
     @Override
@@ -61,9 +72,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.forgotPassword:
+                
                 startActivity(new Intent(MainActivity.this, ForgotPassword.class));
                 break;
 
+        }
+    }
+
+    //Hàm khi đăng ký xong đỡ nhập lại tên Tài khoản, nó sẽ hiện luôn ở ô gmail(đăng nhập), mình chỉ cần nhập pass thôi
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(Utils.user_current.getEmail() != null) {
+            editTextEmail.setText(Utils.user_current.getEmail());
         }
     }
 
@@ -93,6 +114,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         } else {
             progressBar.setVisibility(View.VISIBLE);
+
+            // save paper : hàm chạy lại app thì ô gmail vẫn lưu giá trị mail trước đó nhập vào
+            Paper.book().write("email", email);
+
             mAuth.signInWithEmailAndPassword(email, pass)
                     .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override

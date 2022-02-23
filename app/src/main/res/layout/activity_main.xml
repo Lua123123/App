@@ -83,7 +83,7 @@
             android:layout_gravity="end"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="50dp"
-            android:background="@drawable/imgg"
+            android:background="@drawable/bg_login"
             android:gravity="center"
             android:padding="10dp"
             android:text="LOGIN"

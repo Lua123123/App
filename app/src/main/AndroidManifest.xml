@@ -14,8 +14,14 @@
         android:theme="@style/Theme.App"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activity.ThanhToanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.GioHangActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.LapTopChiTietActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".Activity.DienThoaiChiTietAcivity"
             android:exported="false" />

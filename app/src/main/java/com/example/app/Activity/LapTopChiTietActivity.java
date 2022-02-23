@@ -15,11 +15,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.app.Model.SanPhamMoi;
 import com.example.app.R;
+import com.example.app.Retrofit.ApiBanHang;
+import com.example.app.Retrofit.RetrofitClient;
+import com.example.app.Utils.Utils;
 
 import java.text.DecimalFormat;
 
 public class LapTopChiTietActivity extends AppCompatActivity {
-    Toolbar toolbar;
+//    Toolbar toolbar;
     TextView tensp, giasp, mota;
     Button btnthem;
     ImageView imghinhanh, reg_back;
@@ -29,10 +32,12 @@ public class LapTopChiTietActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lap_top_chi_tiet);
+
         initView();
+//        ActionToolBar();
         reg_back();
         initData();
-//        ActionToolBar();
+
 
     }
 
@@ -55,6 +60,7 @@ public class LapTopChiTietActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent_reg_back = new Intent(getApplicationContext(), LaptopActivity.class);
+                //intent_reg_back.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent_reg_back);
             }
         });
@@ -77,7 +83,7 @@ public class LapTopChiTietActivity extends AppCompatActivity {
     }
 
     private void initView() {
-//        toolbar = (Toolbar) findViewById(R.id.toolbarchitiet);
+//        toolbar = findViewById(R.id.toolbarchitietlaptop);
         tensp = (TextView) findViewById(R.id.txttensp);
         giasp = (TextView) findViewById(R.id.txtgiasp);
         mota = (TextView) findViewById(R.id.txtmotachitiet);
