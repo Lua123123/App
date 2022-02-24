@@ -1,7 +1,7 @@
 package com.example.app.Activity;
 
 public class User {
-    public String fullName,phone,email,password;
+    private String fullName,phone,email,password;
 
     public User() {
     }

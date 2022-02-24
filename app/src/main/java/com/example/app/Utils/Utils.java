@@ -6,7 +6,7 @@ import com.example.app.Model.GioHang;
 import java.util.List;
 
 public class Utils {
-    public static final String BASE_URL="http://172.20.144.1/banhang/";
+    public static final String BASE_URL="http://192.168.115.173/banhang/";
 
     //giỏ hàng
     public static List<GioHang> manggiohang;
